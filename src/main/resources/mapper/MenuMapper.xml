@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xust.sims.dao.MenuMapper">
+
+    <sql id="menuCols">
+        id, path, component, name, iconCls
+    </sql>
+
+    <sql id="metaCols">
+        id, keepAlive, requireAuth
+    </sql>
+
+    <resultMap id="menuMap" type="menu">
+        <!-- 规定主键 -->
+        <id column="id" property="id"/>
+        <result column="component" property="component"/>
+        <result column="name" property="name"/>
+        <result column="iconCls" property="iconCls"/>
+        <!-- 一对一关联 -->
+        <association property="meta" column="metaId" fetchType="eager" select="com.xust.sims.dao.MenuMapper.findMeta"/>
+        <!-- 一对多关联 -->
+        <collection property="children" column="id" fetchType="eager" ofType="menu" javaType="list"
+                    select="com.xust.sims.dao.MenuMapper.findChildMenus"/>
+    </resultMap>
+
+    <select id="findAllMenus" resultType="menu">
+        SELECT <include refid="menuCols"/>
+        FROM menu
+    </select>
+
+    <select id="findMeta" resultType="meta">
+        SELECT <include refid="metaCols"/>
+        FROM meta
+        WHERE id = #{metaId}
+    </select>
+
+    <select id="findChildMenus" resultMap="menuMap">
+        SELECT <include refid="menuCols"/>
+        FROM menu
+        WHERE id IN (
+            SELECT childId
+            FROM parent_menus
+            WHERE parentId = #{parentId}
+        )
+    </select>
+
+    <select id="findAllMenusByStatus" resultMap="menuMap">
+        SELECT <include refid="menuCols"/>
+        FROM menu
+        WHERE id IN (
+            SELECT menuId
+            FROM user_menu
+            WHERE status = #{status}
+        )
+    </select>
+
+</mapper>

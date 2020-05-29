@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>您好，
+    <span th:text="${name}"></span>同学，你的信息已被成功录入！相关的信息如下：</p>
+    <p>学工号：<span th:text="${id}"></span></p>
+    <p>初始密码：<span th:text="${password}"></span></p>
+</body>
+</html>

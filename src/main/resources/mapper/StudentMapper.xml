@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xust.sims.dao.StudentMapper">
+
+    <sql id="studentCols">
+        id, name, nation, sex, age, politicsStatus, idCard, phoneNum, email, avatar, description, createTime, updateTime,
+        academyId, majorId, classId
+    </sql>
+
+    <sql id="studentInsertOneCols">
+        id, name, age, sex, email, idCard, academyId, majorId, classId, createTime
+    </sql>
+
+    <sql id="studentInsertBatchCols">
+        id, name, nation, sex, age, politicsStatus, idCard, phoneNum, email, academyId, majorId, classId, createTime
+    </sql>
+
+    <insert id="insertOneStudentInfo" keyColumn="id">
+        INSERT INTO student
+        <trim prefix="(" suffix=")">
+            <include refid="studentInsertOneCols"/>
+        </trim>
+        VALUES (#{id}, #{name},#{age}, #{sex}, #{email}, #{idCard}, #{academyId}, #{majorId}, #{classId}, #{createTime})
+    </insert>
+
+    <insert id="insertBatchStudentInfos" parameterType="list">
+        INSERT INTO student
+        <trim prefix="(" suffix=")">
+            <include refid="studentInsertBatchCols"/>
+        </trim>
+        VALUES
+        <foreach collection="studentExcelData" item="studentInfo" separator=",">
+            (#{studentInfo.id}, #{studentInfo.name}, #{studentInfo.nation}, #{studentInfo.sex}, #{studentInfo.age},
+             #{studentInfo.politicsStatus}, #{studentInfo.idCard}, #{studentInfo.phoneNum}, #{studentInfo.email},
+             #{studentInfo.academyId}, #{studentInfo.majorId}, #{studentInfo.classId}, #{studentInfo.createTime})
+        </foreach>
+    </insert>
+
+    <update id="updateStudentInfo">
+        UPDATE student
+        SET name = #{name}, nation = #{nation}, sex = #{sex}, age = #{age}, politicsStatus = #{politicsStatus},
+            idCard = #{idCard}, phoneNum = #{phoneNum}, email = #{email}, createTime = #{createTime},
+            academyId = #{academy.id}, majorId = #{major.id}, classId = #{classes.id}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteStudentInfo">
+        DELETE
+        FROM student
+        WHERE id = #{id}
+    </delete>
+
+    <resultMap id="studentBaseInfoMap" type="student">
+        <!-- 定义主键 -->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="nation" property="nation"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="politicsStatus" property="politicsStatus"/>
+        <result column="idCard" property="idCard"/>
+        <result column="phoneNum" property="phoneNum"/>
+        <result column="email" property="email"/>
+        <result column="avatar" property="avatar"/>
+        <result column="description" property="description"/>
+
+        <!-- 关联的学院对象 -->
+        <association property="academy" column="academyId" fetchType="eager"
+                     select="com.xust.sims.dao.AcademyMapper.findAcademyBaseInfoById"/>
+        <!-- 关联的专业对象 -->
+        <association property="major" column="majorId" fetchType="eager"
+                     select="com.xust.sims.dao.MajorMapper.findMajorBaseInfoById"/>
+        <!-- 关联的班级对象 -->
+        <association property="classes" column="classId" fetchType="eager"
+                     select="com.xust.sims.dao.ClassMapper.findClassBaseInfoById"/>
+    </resultMap>
+
+    <select id="findStudentByCondition" resultMap="studentBaseInfoMap">
+        SELECT
+        <include refid="studentCols"/>
+        FROM student
+        <where>
+            <if test="id != null and id != ''">
+                AND id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND name = #{name}
+            </if>
+            <if test="selectedAcademy != null">
+                AND academyId = #{selectedAcademy}
+            </if>
+            <if test="selectedMajor != null">
+                AND majorId = #{selectedMajor}
+            </if>
+            <if test="selectedClass != null">
+                AND classId = #{selectedClass}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND createTime between #{startTime} and #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="getClassIdByStudentId" resultType="java.lang.Integer">
+        SELECT classId
+        FROM `student`
+        WHERE id = #{id}
+    </select>
+
+    <select id="findStudentByIds" resultMap="studentBaseInfoMap">
+        SELECT
+        <include refid="studentCols"/>
+        FROM student
+        WHERE id IN
+        <foreach collection="ids" item="id" separator="," open="(" close=")" index="idx">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xust.sims.dao.ClassMapper">
+
+    <sql id="classBaseInfoCols">
+        id, name, count
+    </sql>
+
+    <update id="updateClassSize">
+        UPDATE class
+        SET `count` = #{classSize}
+        WHERE id = #{classId}
+    </update>
+
+    <update id="reduceOneClassSizeByClassId">
+        UPDATE class
+        SET `count` = `count` - 1
+        WHERE id = #{classId}
+    </update>
+
+    <update id="updateClassSizePlusOne">
+        UPDATE class
+        SET `count` = `count` + 1
+        WHERE id = #{classId}
+    </update>
+
+    <resultMap id="classBaseInfoMap" type="class">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <select id="findClassBaseInfoById" resultMap="classBaseInfoMap">
+        SELECT <include refid="classBaseInfoCols"/>
+        FROM class
+        WHERE id = #{id}
+    </select>
+
+    <select id="findClassByMajorId" resultType="class">
+        SELECT class.*
+        FROM class INNER JOIN major_class ON major_class.classId = class.id
+        WHERE majorId = #{majorId}
+    </select>
+
+    <select id="findClassIdByMajorNameAndClassName" resultType="java.lang.Integer">
+        SELECT class.id
+        FROM major_class
+        	LEFT JOIN class ON classId = class.id
+        	LEFT JOIN major ON majorId = major.id
+        WHERE major.name = #{majorName} AND class.name = #{className}
+    </select>
+
+    <select id="findClassSizeByClassId" resultType="java.lang.Integer">
+        SELECT `count`
+        FROM class
+        WHERE id = #{classId}
+    </select>
+</mapper>

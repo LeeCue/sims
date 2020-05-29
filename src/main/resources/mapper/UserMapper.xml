@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xust.sims.dao.UserMapper">
+
+    <sql id="registryCols">
+        uid, password, name, status, locked, enabled
+    </sql>
+
+    <sql id="roleCols">
+        id, name, description
+    </sql>
+
+    <sql id="userBaseInfoCols">
+        id, name, avatar, sex, phoneNum, description, createTime
+    </sql>
+
+    <insert id="insertRegistryInfo">
+        INSERT INTO registry
+        <trim prefix="(" suffix=")">
+            <include refid="registryCols"/>
+        </trim>
+        VALUES (#{uid}, #{password}, #{name}, #{status}, #{locked}, #{enabled})
+    </insert>
+
+    <insert id="addRoleWithUid">
+        INSERT INTO user_role(userId, roleId)
+        VALUES
+        <foreach collection="roleIds" item="roleId" separator=",">
+            (#{userId}, #{roleId})
+        </foreach>
+    </insert>
+
+    <insert id="insertRegistryInfoBatch">
+        INSERT INTO registry
+        <trim prefix="(" suffix=")">
+            <include refid="registryCols"/>
+        </trim>
+        VALUES
+        <foreach collection="registries" item="registry" separator=",">
+            (#{registry.uid}, #{registry.password}, #{registry.name},
+             #{registry.status}, #{registry.locked}, #{registry.enabled})
+        </foreach>
+    </insert>
+
+    <update id="updateAdminBaseInfo">
+        UPDATE admin
+        SET avatar = #{avatar}, description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateUserEnabled">
+        UPDATE registry
+        SET enabled = #{enabled}
+        WHERE uid = #{uid}
+    </update>
+
+    <update id="updateStudentBaseInfo">
+        UPDATE student
+        SET avatar = #{avatar}, description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteRegistryInfo">
+        DELETE
+        FROM registry
+        WHERE uid = #{id}
+    </delete>
+
+    <delete id="deleteToken">
+        DELETE
+        FROM persistent_logins
+        WHERE username = #{id}
+    </delete>
+
+    <delete id="deleteRoleWithUid">
+        DELETE
+        FROM user_role
+        WHERE userId = #{userId} AND roleId = #{roleId}
+    </delete>
+
+    <select id="checkUserByUid" resultType="registry">
+        SELECT <include refid="registryCols"/>
+        FROM registry
+        WHERE uid = #{uid}
+    </select>
+
+    <select id="findRolesByUid" resultType="role">
+        SELECT <include refid="roleCols"/>
+        FROM role
+        WHERE id IN (
+            SELECT roleId
+            FROM user_role
+            WHERE userId = #{uid}
+        )
+    </select>
+
+    <select id="findAdminInfoByUid" resultType="user" parameterType="string">
+        SELECT <include refid="userBaseInfoCols"/>
+        FROM admin
+        WHERE id = #{uid}
+    </select>
+
+    <select id="findUserIdByName" resultType="string" parameterType="string">
+        SELECT uid
+        FROM registry
+        <where>
+            <if test="name != null and name != ''">
+                name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllUsername" resultType="String">
+        SELECT uid
+        FROM registry
+    </select>
+
+    <select id="findAllRoles" resultType="com.xust.sims.entity.Role">
+        SELECT <include refid="roleCols"/>
+        FROM role
+    </select>
+
+    <select id="findStudentInfoByUid" resultType="user" parameterType="string">
+        SELECT <include refid="userBaseInfoCols"/>
+        FROM student
+        WHERE id = #{uid}
+    </select>
+
+    <select id="findUserNum" resultType="java.lang.Long">
+        SELECT COUNT(uid)
+        FROM registry
+    </select>
+
+    <select id="findUserNumByUid" resultType="java.lang.Long">
+        SELECT COUNT(uid)
+        FROM registry
+        WHERE uid = #{uid}
+    </select>
+
+    <select id="findUserNumByName" resultType="java.lang.Long">
+        SELECT COUNT(uid)
+        FROM registry
+        WHERE name = #{name}
+    </select>
+
+</mapper>

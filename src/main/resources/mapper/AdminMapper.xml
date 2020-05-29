@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xust.sims.dao.AdminMapper">
+
+    <sql id="adminCols">
+        id, name, avatar, sex, phoneNum, comment, createTime, updateTime
+    </sql>
+
+    <sql id="adminBaseInfoCols">
+        id, name, avatar
+    </sql>
+
+    <insert id="insertAdmin">
+        INSERT INTO admin
+        <trim prefix="(" suffix="">
+            <include refid="adminCols"/>
+        </trim>
+        VALUES (#{id}, #{name}, #{avatar}, #{sex}, #{phoneNum}, #{comment})
+    </insert>
+
+    <delete id="deleteAdmin">
+        DELETE
+        FROM admin
+        WHERE id = #{id}
+    </delete>
+
+    <select id="findAdminByUid" resultType="admin">
+        SELECT <include refid="adminCols"/>
+        FROM admin
+        WHERE id = #{uid}
+    </select>
+
+    <select id="findAdminBaseInformation" resultType="user">
+        SELECT <include refid="adminBaseInfoCols"/>
+        FROM admin
+        WHERE id = #{uid}
+    </select>
+
+</mapper>
