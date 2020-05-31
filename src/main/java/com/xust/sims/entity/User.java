@@ -18,7 +18,7 @@ public class User implements Serializable {
     private String avatar;
     private String sex;
     private String phoneNum;
-    private Boolean enabled = Boolean.TRUE;
+    private Boolean enabled;
     private String description;
     private Date createTime;
     private Integer status;

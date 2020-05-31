@@ -109,6 +109,7 @@ public class UserServiceImpl implements UserService {
         }
         userInfo.setStatus(status);
         userInfo.setRoles(roles);
+        userInfo.setEnabled(user.isEnabled());
         return userInfo;
     }
 
