@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface UserMapper {
     /**
-     * 根据uid和password来查找用户1
+     * 根据uid和password来查找用户
      * @param uid uid
      * @return 注册用户信息
      */
