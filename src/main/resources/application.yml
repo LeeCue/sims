@@ -50,8 +50,6 @@ logging:
     org:
       springframework:
         jdbc: debug
-      crazycake:
-        shiro: debug
 
 
 
