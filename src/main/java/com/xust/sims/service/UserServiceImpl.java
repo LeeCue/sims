@@ -43,8 +43,9 @@ public class UserServiceImpl implements UserService {
         //对密码进行加密处理
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
         registry.setPassword(encoder.encode(registry.getPassword()));
+        boolean res = userMapper.insertRegistryInfo(registry) == 1;
         dealUserToRole(registry.getUid(), registry.getStatus());
-        return userMapper.insertRegistryInfo(registry) == 1;
+        return res;
     }
 
     @Override
