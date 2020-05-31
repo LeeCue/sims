@@ -4,7 +4,6 @@ import com.xust.sims.entity.Class;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.jnlp.IntegrationService;
 import java.util.List;
 
 /**
