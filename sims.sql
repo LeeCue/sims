@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 30/05/2020 16:46:30
+ Date: 31/05/2020 18:20:59
 */
 
 SET NAMES utf8mb4;
@@ -25,7 +25,7 @@ CREATE TABLE `academy`  (
   `id` int(5) NOT NULL AUTO_INCREMENT COMMENT '学院id',
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学院名称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of academy
@@ -73,7 +73,7 @@ CREATE TABLE `admin`  (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('123', '李四', 'https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/3811584871891418.jpg', '男', '12345678911', '哈哈哈哈哈哈哈', '2020-03-14 15:38:24', '2020-03-22 18:11:34');
+INSERT INTO `admin` VALUES ('123', 'LeeCue', 'https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/5081590838134141.jpg', '男', '12345678911', '哈哈哈哈哈哈哈', '2020-03-14 15:38:24', '2020-05-30 19:34:35');
 
 -- ----------------------------
 -- Table structure for announcement_type
@@ -98,7 +98,7 @@ CREATE TABLE `class`  (
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '班级信息',
   `count` int(5) NULL DEFAULT 0 COMMENT '班级人数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of class
@@ -226,7 +226,7 @@ CREATE TABLE `major`  (
   `id` int(5) NOT NULL AUTO_INCREMENT COMMENT '专业id',
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '专业信息',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of major
@@ -277,7 +277,7 @@ CREATE TABLE `menu`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `menu_ibfk_1`(`metaId`) USING BTREE,
   CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`metaId`) REFERENCES `meta` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menu
@@ -308,7 +308,7 @@ CREATE TABLE `meta`  (
   `keepAlive` tinyint(4) NOT NULL DEFAULT 0 COMMENT '保持连接',
   `requireAuth` tinyint(4) NOT NULL DEFAULT 1 COMMENT '要求必须登录',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of meta
@@ -385,6 +385,7 @@ CREATE TABLE `persistent_logins`  (
 -- ----------------------------
 -- Records of persistent_logins
 -- ----------------------------
+INSERT INTO `persistent_logins` VALUES ('123', 'LHXTXxZHWzT2r1BqonPZQg==', '4eZ6J9oP9vlWDOZU4Zs5sg==', '2020-05-31 17:06:03');
 
 -- ----------------------------
 -- Table structure for registry
@@ -403,9 +404,7 @@ CREATE TABLE `registry`  (
 -- ----------------------------
 -- Records of registry
 -- ----------------------------
-INSERT INTO `registry` VALUES ('123', '李四', 1, '$2a$10$wcb.jdsbu7vRm2n3eA43Bujsk0s7CEZOzJPw38.2On4y4fonOuKam', 0, 1);
-INSERT INTO `registry` VALUES ('2010100106', '李四', 2, '$2a$10$tBAJt6HBw6np6dsBdK1PDumilOuUmbVPWsfDU./ms9av7zCd63FOa', 0, 1);
-INSERT INTO `registry` VALUES ('2010100107', '李四', 2, '$2a$10$S/eJm3nBmW/rmIUD8QJn6.YvG3RUgmFw/zfmZWXo3lxXWLnB2Tb3S', 0, 1);
+INSERT INTO `registry` VALUES ('123', 'LeeCue', 1, '$2a$10$wcb.jdsbu7vRm2n3eA43Bujsk0s7CEZOzJPw38.2On4y4fonOuKam', 0, 1);
 INSERT INTO `registry` VALUES ('2010100108', '李四', 2, '$2a$10$W8qF4EL.U05eQZiUswauROtt9uBjmbYrMj1bOkNwAYuPAAK9wsIFm', 0, 1);
 INSERT INTO `registry` VALUES ('2010100109', '李四', 2, '$2a$10$DGOKrqf6s4fngL4Ma9AaCOVOHXxJk05zyTMmPgHmSy6I3QSzRqH8G', 0, 1);
 INSERT INTO `registry` VALUES ('2010100110', '李四', 2, '$2a$10$ue7r/g3Eu4PbjkpXpTIJVeB0S8ubiHANbT4DTbx01nS57Mgmx/nr2', 0, 1);
@@ -445,7 +444,7 @@ CREATE TABLE `role`  (
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名称',
   `description` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role
@@ -513,9 +512,7 @@ CREATE TABLE `student`  (
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES ('2010100106', '李四', '汉', '男', 20, '共青团员', '123872764129746000', '12324231242', '787504485@qq.com', '', '', 11, 10, 11, '2020-12-01 08:00:00', '2020-05-30 14:08:09');
-INSERT INTO `student` VALUES ('2010100107', '李四', '汉', '男', 20, '共青团员', '123872764129746000', '12324231242', '787504485@qq.com', '', '', 13, 10, 10, '2020-12-02 00:00:00', '2020-05-24 14:59:54');
-INSERT INTO `student` VALUES ('2010100108', '李四', '汉', '男', 20, '共青团员', '123872764129746000', '12324231242', '787504485@qq.com', '', '', 13, 10, 10, '2020-12-02 00:00:00', '2020-05-24 14:59:54');
+INSERT INTO `student` VALUES ('2010100108', '李四', '汉', '男', 20, '共青团员', '123872764129746000', '12324231242', '787504485@qq.com', '', '', 13, 10, 10, '2020-12-01 08:00:00', '2020-05-31 15:40:49');
 INSERT INTO `student` VALUES ('2010100109', '李四', '汉', '男', 20, '共青团员', '123872764129746000', '12324231242', '787504485@qq.com', '', '', 13, 10, 10, '2020-12-02 00:00:00', '2020-05-24 14:59:54');
 INSERT INTO `student` VALUES ('2010100110', '李四', '汉', '男', 20, '共青团员', '123872764129746000', '12324231242', '787504485@qq.com', '', '', 13, 10, 10, '2020-12-02 00:00:00', '2020-05-24 14:59:54');
 INSERT INTO `student` VALUES ('2010100111', '李四', '汉', '男', 20, '共青团员', '123872764129746000', '12324231242', '787504485@qq.com', '', '', 13, 10, 10, '2020-12-02 00:00:00', '2020-05-24 14:59:54');
@@ -633,8 +630,6 @@ CREATE TABLE `user_role`  (
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('123', 1);
-INSERT INTO `user_role` VALUES ('2010100106', 3);
-INSERT INTO `user_role` VALUES ('2010100107', 3);
 INSERT INTO `user_role` VALUES ('2010100108', 3);
 INSERT INTO `user_role` VALUES ('2010100109', 3);
 INSERT INTO `user_role` VALUES ('2010100110', 3);
@@ -665,8 +660,6 @@ INSERT INTO `user_role` VALUES ('2010100134', 3);
 INSERT INTO `user_role` VALUES ('2010100135', 3);
 INSERT INTO `user_role` VALUES ('2010100136', 3);
 INSERT INTO `user_role` VALUES ('123', 4);
-INSERT INTO `user_role` VALUES ('2010100106', 4);
-INSERT INTO `user_role` VALUES ('2010100107', 4);
 INSERT INTO `user_role` VALUES ('2010100108', 4);
 INSERT INTO `user_role` VALUES ('2010100109', 4);
 INSERT INTO `user_role` VALUES ('2010100110', 4);
