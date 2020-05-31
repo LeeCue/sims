@@ -8,7 +8,7 @@ spring:
     url: jdbc:mysql://localhost:3306/sims?useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
-    #配置数据库连接池
+    #配置数据库连接池 test
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
