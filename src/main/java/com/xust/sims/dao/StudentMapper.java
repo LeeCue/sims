@@ -5,7 +5,6 @@ import com.xust.sims.dto.StudentInfoQuery;
 import com.xust.sims.dto.StudentInsert;
 import com.xust.sims.entity.Student;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
