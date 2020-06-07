@@ -109,4 +109,10 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
     public void updateClassSizePlusOne(Integer classId) {
         classMapper.updateClassSizePlusOne(classId);
     }
+
+    @Override
+    public boolean addMajorInfo(Integer academyId, String majorName) {
+
+        return false;
+    }
 }

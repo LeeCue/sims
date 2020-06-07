@@ -6,6 +6,10 @@
         id, name
     </sql>
 
+    <insert id="addMajorInfo">
+
+    </insert>
+
     <resultMap id="majorBaseInfoMap" type="major">
         <id column="id" property="id"/>
         <result column="name" property="name"/>

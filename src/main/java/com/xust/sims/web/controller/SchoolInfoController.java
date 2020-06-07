@@ -1,16 +1,20 @@
 package com.xust.sims.web.controller;
 
+import com.xust.sims.dto.RespBean;
+import com.xust.sims.dto.ResponseCode;
 import com.xust.sims.entity.Academy;
 import com.xust.sims.entity.Class;
 import com.xust.sims.entity.Major;
 import com.xust.sims.service.SchoolInfoService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.javassist.bytecode.analysis.Executor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author LeeCue
@@ -46,5 +50,12 @@ public class SchoolInfoController {
     @GetMapping("/class/getByMajorId")
     public List<Class> initClassByMajorId(Integer majorId) {
         return schoolInfoService.getClassByMajorId(majorId);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/school/addMajor")
+    public RespBean addMajorInfo(@RequestParam(name = "academyId", required = true) Integer academyId,
+                                 @RequestParam(name = "majorName", required = true) String majorName) {
+        log.info("获取的学院ID为：{}, 专业名称为：{}", academyId, majorName);
+        return new RespBean(ResponseCode.SUCCESS);
     }
 }

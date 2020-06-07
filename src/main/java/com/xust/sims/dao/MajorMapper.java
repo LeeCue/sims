@@ -32,4 +32,6 @@ public interface MajorMapper {
     List<Major> findMajorsByAcademyId(Integer academyId);
 
     Integer findMajorIdByName(String majorName);
+
+    int addMajorInfo(Integer academyId, String majorName);
 }

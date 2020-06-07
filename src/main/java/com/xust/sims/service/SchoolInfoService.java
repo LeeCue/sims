@@ -88,4 +88,6 @@ public interface SchoolInfoService {
     void updateClassSize(Map<Integer, Integer> classSizeMap);
 
     void updateClassSizePlusOne(Integer classId);
+
+    boolean addMajorInfo(Integer academyId, String majorName);
 }
