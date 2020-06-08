@@ -54,4 +54,11 @@ public interface BoardMapper {
      */
     int updateBoardPublished(@Param("id") Integer id,
                               @Param("published") Boolean published);
+
+    /**
+     * 根据id删除公告
+     * @param id
+     * @return
+     */
+    int deleteBoardById(Integer id);
 }

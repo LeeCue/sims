@@ -53,6 +53,13 @@ public class BoardController extends BaseController {
         return new PageInfo<NoticeBoard>(temp);
     }
 
+    @DeleteMapping("/board/{id}")
+    @Secured({"ROLE_admin"})
+    public RespBean deleteBoard(@PathVariable("id") Integer id) {
+        boardService.deleteBoardById(id);
+        return new RespBean(ResponseCode.SUCCESS);
+    }
+
     @GetMapping("/changeBoard/published")
     @Secured({"ROLE_admin"})
     public RespBean changePublished(@RequestParam("id") Integer id,

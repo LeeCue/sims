@@ -48,4 +48,10 @@ public interface BoardService {
      * @param published
      */
     void changeBoardPublished(Integer id, Boolean published);
+
+    /**
+     * 根据id删除公告
+     * @param id
+     */
+    void deleteBoardById(Integer id);
 }

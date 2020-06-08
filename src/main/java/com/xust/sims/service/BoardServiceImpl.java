@@ -41,12 +41,17 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void updateBoard(NoticeBoard board) {
-        board.setUpdateTime(new Date());
+        board.setUpdateTime(new Date(System.currentTimeMillis()));
         boardMapper.updateBoard(board);
     }
 
     @Override
     public void changeBoardPublished(Integer id, Boolean published) {
         boardMapper.updateBoardPublished(id, published);
+    }
+
+    @Override
+    public void deleteBoardById(Integer id) {
+        boardMapper.deleteBoardById(id);
     }
 }
