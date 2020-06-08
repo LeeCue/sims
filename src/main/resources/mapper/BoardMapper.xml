@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xust.sims.dao.BoardMapper">
+
+    <sql id="baseBoardCols">
+        id, title, typeName, published, createTime, updateTime
+    </sql>
+
+    <sql id="allBoardCols">
+        id, title, content, typeName, published, createTime, updateTime
+    </sql>
+
+    <sql id="boardColsWithoutId">
+        title, published, typeName, content, createTime, updateTime
+    </sql>
+
+    <insert id="addBoard">
+        INSERT INTO notice_board
+        <trim prefix="(" suffix=")"><include refid="boardColsWithoutId"/></trim>
+        VALUES
+        (#{title}, #{published}, #{typeName}, #{content}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="updateBoard">
+        UPDATE notice_board
+        SET  title = #{title}, published = #{published}, typeName = #{typeName}, content = #{content},
+             updateTime = #{updateTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateBoardPublished">
+        UPDATE notice_board
+        SET published = #{published}
+        WHERE id = #{id}
+    </update>
+
+    <resultMap id="baseBoardMap" type="NoticeBoard">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="published" column="published"/>
+        <result property="typeName" column="typeName"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+    <resultMap id="allBoardMap" type="NoticeBoard">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="published" column="published"/>
+        <result property="typeName" column="typeName"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+    <select id="getBoards" resultMap="baseBoardMap">
+        <bind name="title_search_pattern" value="'%' + keyword + '%'"/>
+        SELECT <include refid="baseBoardCols"/>
+        FROM notice_board
+        <where>
+            <if test="keyword != null and keyword != ''">
+                title like #{title_search_pattern}
+            </if>
+        </where>
+    </select>
+
+    <select id="getBoardById" resultMap="allBoardMap">
+        SELECT <include refid="allBoardCols"/>
+        FROM notice_board
+        WHERE id = #{id}
+    </select>
+
+    <select id="getBoardsByTypeName" resultMap="baseBoardMap">
+        SELECT <include refid="baseBoardCols"/>
+        FROM notice_board
+        WHERE typeName = #{typeName}
+    </select>
+</mapper>

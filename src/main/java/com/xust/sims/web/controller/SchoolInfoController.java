@@ -53,8 +53,8 @@ public class SchoolInfoController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/school/addMajor")
-    public RespBean addMajorInfo(@RequestParam(name = "academyId", required = true) Integer academyId,
-                                 @RequestParam(name = "majorName", required = true) String majorName) {
+    public RespBean addMajorInfo(@RequestParam(name = "academyId") Integer academyId,
+                                 @RequestParam(name = "majorName") String majorName) {
         log.info("获取的学院ID为：{}, 专业名称为：{}", academyId, majorName);
         return new RespBean(ResponseCode.SUCCESS);
     }
