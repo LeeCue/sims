@@ -80,5 +80,6 @@
         SELECT <include refid="baseBoardCols"/>
         FROM notice_board
         WHERE typeName = #{typeName}
+            AND published = true
     </select>
 </mapper>

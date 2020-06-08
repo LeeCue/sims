@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 31/05/2020 18:20:59
+ Date: 08/06/2020 18:46:54
 */
 
 SET NAMES utf8mb4;
@@ -76,20 +76,6 @@ CREATE TABLE `admin`  (
 INSERT INTO `admin` VALUES ('123', 'LeeCue', 'https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/5081590838134141.jpg', '男', '12345678911', '哈哈哈哈哈哈哈', '2020-03-14 15:38:24', '2020-05-30 19:34:35');
 
 -- ----------------------------
--- Table structure for announcement_type
--- ----------------------------
-DROP TABLE IF EXISTS `announcement_type`;
-CREATE TABLE `announcement_type`  (
-  `id` int(4) NOT NULL COMMENT '公告类型id',
-  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公告类型',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of announcement_type
--- ----------------------------
-
--- ----------------------------
 -- Table structure for class
 -- ----------------------------
 DROP TABLE IF EXISTS `class`;
@@ -103,7 +89,7 @@ CREATE TABLE `class`  (
 -- ----------------------------
 -- Records of class
 -- ----------------------------
-INSERT INTO `class` VALUES (10, '1701', 1);
+INSERT INTO `class` VALUES (10, '1701', 2);
 INSERT INTO `class` VALUES (11, '1702', 1);
 INSERT INTO `class` VALUES (12, '1703', 0);
 INSERT INTO `class` VALUES (13, '1701', 38);
@@ -277,7 +263,7 @@ CREATE TABLE `menu`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `menu_ibfk_1`(`metaId`) USING BTREE,
   CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`metaId`) REFERENCES `meta` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menu
@@ -298,6 +284,8 @@ INSERT INTO `menu` VALUES (14, '/studentInfoManage', 'StudentInfoManage', '学�
 INSERT INTO `menu` VALUES (15, '', 'Index', '校园中心', 'el-icon-s-home', 1);
 INSERT INTO `menu` VALUES (16, '/home', 'Home', '主页', NULL, 1);
 INSERT INTO `menu` VALUES (17, '/academyManage', 'AcademyManage', '学院管理', NULL, 1);
+INSERT INTO `menu` VALUES (18, '', 'Index', '个人信息', 'el-icon-s-custom', 1);
+INSERT INTO `menu` VALUES (19, '/studentInfo', 'StudentInfo', '信息查询', NULL, 1);
 
 -- ----------------------------
 -- Table structure for meta
@@ -308,7 +296,7 @@ CREATE TABLE `meta`  (
   `keepAlive` tinyint(4) NOT NULL DEFAULT 0 COMMENT '保持连接',
   `requireAuth` tinyint(4) NOT NULL DEFAULT 1 COMMENT '要求必须登录',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of meta
@@ -323,23 +311,29 @@ INSERT INTO `meta` VALUES (4, 0, 0);
 -- ----------------------------
 DROP TABLE IF EXISTS `notice_board`;
 CREATE TABLE `notice_board`  (
-  `id` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '公告id',
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
+  `published` tinyint(4) NULL DEFAULT NULL COMMENT '发布状态',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
-  `typeId` int(4) NOT NULL COMMENT '公告类型id',
-  `adminId` bigint(15) NOT NULL COMMENT '管理员id',
+  `typeName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '公告类型名称',
   `createTime` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updateTime` timestamp(0) NULL DEFAULT NULL COMMENT '信息更新时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `notice_board_ibfk_1`(`typeId`) USING BTREE,
-  INDEX `notice_board_ibfk_2`(`adminId`) USING BTREE,
-  CONSTRAINT `notice_board_ibfk_1` FOREIGN KEY (`typeId`) REFERENCES `announcement_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `notice_board_ibfk_2` FOREIGN KEY (`id`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `updateTime` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '信息更新时间',
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of notice_board
 -- ----------------------------
+INSERT INTO `notice_board` VALUES (1, '选课通知1', 1, '<div><h1 style=\"text-align: center;\">关于2019-2020学年第二学期网络公选课选课与学习的通知</h1></div><div><p></p><div><p>各学院：</p><p>为确保“新冠肺炎”疫情防控期间 “停课不停学、学习不延期”，本学期网络公选课现开始选课，我校开设的网络公选课包括两类：①尔雅通识课；②智慧树网课。现将学生选课及课程学习有关事项通知如下：</p><p><strong>一、</strong><strong>选课</strong><strong>对象</strong></p><p>全校本科生。</p><p><strong>二、</strong><strong>选课</strong><strong>时间</strong></p><p>2020年3月2日10:00—2020年3月5日22:00。</p><p><strong>三</strong><strong>、选课</strong><strong>及学习</strong><strong>方法</strong></p><p>本次网络公选课采用自主选课模式，请学生登录对应的学习平台进行选课学习：</p><p>1.尔雅通识课：学生登录“西安科技大学网络教学平台”（http://study.xust.edu.cn/portal）或者学习通APP进行选课学习（具体操作流程见附件1）。</p><p>2.智慧树网课：学生登录“西安科技大学智慧树网课平台”（http://portals.zhihuishu.com/xust）或者知到APP进行选课学习（具体操作流程见附件2）。</p><p><strong>四</strong><strong>、学习时间安排</strong></p><p>学习时间为3月9日至5月17日，时间截止后将停止所有课程的线上教学活动，并组织线上考试（线上考试时间为5月18日至5月31日）。</p><p><strong>五</strong><strong>、成绩评定</strong></p><p>1.学生完成所有在线学习、测试、讨论互动及考试等环节，且总评成绩达到60分，可获得该课程的学分，所获学分纳入公选课学分。</p><p>2.每门网络课程的学分均按照1.0学分认定，<strong>2016级</strong><strong>学生选课门次</strong><strong>及学分</strong><strong>不受限制</strong><strong>（按公选课毕业要求学分选够为止）</strong>，其他年级每学期最多累计2.0个公选课学分（与学校开设的公选课学分不冲突），超过部分不计学分。</p><p><strong>六</strong><strong>、其他注意事项</strong></p><p><span style=\"color: rgb(194, 79, 74);\">1.本次公选课选课为2016级学生最后一次选课机会，请未修够公选课学分的2016级学生务必按要求选课，以免影响正常毕业。</span></p><p>2.考核合格并认定学分的课程，学生可在本学期末通过教务管理系统进行成绩查询。</p><p>3.严禁使用破解、快进等软件进行学习，一经发现存在刷课、快进、拖拽等任何不良记录，<strong>学校将按照按照教学及考试相关规定按违纪</strong><strong>处理</strong><strong>，同时</strong><strong>该门成绩按不合格</strong>。</p><p>4.为保证网络课程的有效实施，请各学院督促学生合理安排学习时间，按时完成各环节学习内容。</p></div></div>', '教务通知公告', '2020-06-08 13:24:00', '2020-06-08 18:25:47');
+INSERT INTO `notice_board` VALUES (3, '哈哈哈哈哈2', 1, '<p>测试</p>', '教务通知公告', '2020-06-11 16:48:09', '2020-06-06 16:48:14');
+INSERT INTO `notice_board` VALUES (4, '哈哈哈哈哈4', 1, '<p>测试</p>', '教务通知公告', '2020-06-08 16:48:52', '2020-06-08 16:48:52');
+INSERT INTO `notice_board` VALUES (5, '哈哈哈哈哈5', 1, '<p>测试</p>', '教务通知公告', '2020-06-08 16:48:55', '2020-06-08 16:48:55');
+INSERT INTO `notice_board` VALUES (6, '哈哈哈哈哈6', 1, '<p>测试</p>', '教务通知公告', '2020-06-08 16:48:58', '2020-06-08 16:48:58');
+INSERT INTO `notice_board` VALUES (7, '哈哈哈哈哈7', 1, '<p>测试</p>', '教务通知公告', '2020-06-08 16:49:01', '2020-06-08 16:49:01');
+INSERT INTO `notice_board` VALUES (8, '哈哈哈哈哈8', 1, '<p>测试</p>', '教务通知公告', '2020-06-08 16:49:03', '2020-06-08 16:49:03');
+INSERT INTO `notice_board` VALUES (9, '哈哈哈哈哈9', 1, '<p>测试</p>', '教务通知公告', '2020-06-08 16:49:06', '2020-06-08 16:49:06');
+INSERT INTO `notice_board` VALUES (10, '哈哈哈哈哈10', 1, '<p>测试</p>', '教务通知公告', '2020-06-08 16:49:09', '2020-06-08 16:49:09');
+INSERT INTO `notice_board` VALUES (11, '哈哈哈哈哈11', 1, '<p>测试</p>', '教务通知公告', '2020-06-08 16:49:24', '2020-06-08 16:49:24');
 
 -- ----------------------------
 -- Table structure for parent_menus
@@ -369,6 +363,7 @@ INSERT INTO `parent_menus` VALUES (8, 10);
 INSERT INTO `parent_menus` VALUES (8, 13);
 INSERT INTO `parent_menus` VALUES (11, 12);
 INSERT INTO `parent_menus` VALUES (15, 16);
+INSERT INTO `parent_menus` VALUES (18, 19);
 
 -- ----------------------------
 -- Table structure for persistent_logins
@@ -385,7 +380,8 @@ CREATE TABLE `persistent_logins`  (
 -- ----------------------------
 -- Records of persistent_logins
 -- ----------------------------
-INSERT INTO `persistent_logins` VALUES ('123', 'LHXTXxZHWzT2r1BqonPZQg==', '4eZ6J9oP9vlWDOZU4Zs5sg==', '2020-05-31 17:06:03');
+INSERT INTO `persistent_logins` VALUES ('123', 'vYk4eigXWOeQ8S71kxo1wg==', 'mXanTeDxFuPQFgsslascow==', '2020-06-08 18:33:39');
+INSERT INTO `persistent_logins` VALUES ('123', 'XpM6J+ODdN0tdieVa1ZyVg==', '30ngiN3tFdQnWIsseo2N8w==', '2020-06-08 17:26:19');
 
 -- ----------------------------
 -- Table structure for registry
@@ -434,6 +430,7 @@ INSERT INTO `registry` VALUES ('2010100133', '李四', 2, '$2a$10$dLvrzcCbnSU7rT
 INSERT INTO `registry` VALUES ('2010100134', '李四', 2, '$2a$10$LI8Sea.5OBpwP6hc0sQvJ.01O9wXlbmvmnMJcg.gxHUuunOp4fJH2', 0, 1);
 INSERT INTO `registry` VALUES ('2010100135', '李四', 2, '$2a$10$Uo8UMeAEwe07VuO/lqjEm.KhYnkSLj2JKESVba/9n20Zmtt.8csK.', 0, 1);
 INSERT INTO `registry` VALUES ('2010100136', '李四', 2, '$2a$10$CvqnVB2MVyOWCvRslyEu/.6CHkHeKunwUD2k7g45HMF1QUcTMrzhu', 0, 1);
+INSERT INTO `registry` VALUES ('2010110102', '杨强', 2, '$2a$10$3vsEG3NYwwAjC/BxayFEjeVMep5tvt04qbWRF4UfkLJyDa8zJSifK', 0, 1);
 
 -- ----------------------------
 -- Table structure for role
@@ -542,6 +539,7 @@ INSERT INTO `student` VALUES ('2010100134', '李四', '汉', '男', 20, '共青�
 INSERT INTO `student` VALUES ('2010100135', '李四', '汉', '男', 20, '共青团员', '123872764129746000', '12324231242', '787504485@qq.com', '', '', 13, 10, 10, '2020-12-02 00:00:00', '2020-05-24 19:37:30');
 INSERT INTO `student` VALUES ('2010100136', '李四', '汉', '男', 20, '共青团员', '123872764129746000', '12324231242', '787504485@qq.com', '', '', 13, 10, 10, '2020-12-02 00:00:00', '2020-05-24 19:37:30');
 INSERT INTO `student` VALUES ('2010110101', '王五', NULL, '男', 23, NULL, '12312412312312321', NULL, '787504485@qq.com', '', '', 10, 10, 11, '2020-05-05 08:00:00', '2020-05-26 11:37:48');
+INSERT INTO `student` VALUES ('2010110102', '杨强', NULL, '男', 23, NULL, '23123123124123123', NULL, '787504485@qq.com', '', '', 10, 10, 11, '2020-05-06 08:00:00', '2020-05-31 20:42:27');
 INSERT INTO `student` VALUES ('2010110201', '王五', NULL, '男', 23, NULL, '12312412312312321', NULL, '787504485@qq.com', '', '', 11, 10, 11, '2020-05-05 08:00:00', '2020-05-26 11:21:52');
 
 -- ----------------------------
@@ -612,6 +610,7 @@ INSERT INTO `user_menu` VALUES (1, 11);
 INSERT INTO `user_menu` VALUES (2, 11);
 INSERT INTO `user_menu` VALUES (1, 15);
 INSERT INTO `user_menu` VALUES (2, 15);
+INSERT INTO `user_menu` VALUES (2, 18);
 
 -- ----------------------------
 -- Table structure for user_role
@@ -659,6 +658,7 @@ INSERT INTO `user_role` VALUES ('2010100133', 3);
 INSERT INTO `user_role` VALUES ('2010100134', 3);
 INSERT INTO `user_role` VALUES ('2010100135', 3);
 INSERT INTO `user_role` VALUES ('2010100136', 3);
+INSERT INTO `user_role` VALUES ('2010110102', 3);
 INSERT INTO `user_role` VALUES ('123', 4);
 INSERT INTO `user_role` VALUES ('2010100108', 4);
 INSERT INTO `user_role` VALUES ('2010100109', 4);
@@ -689,5 +689,6 @@ INSERT INTO `user_role` VALUES ('2010100133', 4);
 INSERT INTO `user_role` VALUES ('2010100134', 4);
 INSERT INTO `user_role` VALUES ('2010100135', 4);
 INSERT INTO `user_role` VALUES ('2010100136', 4);
+INSERT INTO `user_role` VALUES ('2010110102', 4);
 
 SET FOREIGN_KEY_CHECKS = 1;
