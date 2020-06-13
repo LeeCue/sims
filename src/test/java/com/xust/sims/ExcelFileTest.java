@@ -12,7 +12,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author LeeCue
@@ -34,5 +39,18 @@ public class ExcelFileTest {
         WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
         excelWriter.write(new ArrayList(), writeSheet);
         excelWriter.finish();
+    }
+
+    @Test
+    public void testSchedule() throws Exception{
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date = dateFormat.parse("2020-6-11 15:30:00");
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(10);
+        executorService.schedule(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("我被执行了..." + dateFormat.format(new Date()));
+            }
+        }, date.getTime(), TimeUnit.MILLISECONDS);
     }
 }

@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -194,6 +195,7 @@ public class StudentInfoServiceImpl implements StudentInfoService {
 
     @Override
     public void updateStudentInfo(Student student) {
+        student.setUpdateTime(new Date());
         studentMapper.updateStudentInfo(student);
     }
 
