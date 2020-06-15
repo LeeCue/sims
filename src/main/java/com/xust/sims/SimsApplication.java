@@ -16,8 +16,7 @@ public class SimsApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SimsApplication.class, args);
-        System.out.println("O(∩_∩)O  学生信息管理系统启动成功  (#^.^#)" +
-                "\n" +
+        System.out.println("O(∩_∩)O  学生信息管理系统启动成功  (#^.^#)\n" +
                 "   .-'''-. .-./`) ,---.    ,---.   .-'''-.  \n" +
                 "  / _     \\\\ .-.')|    \\  /    |  / _     \\ \n" +
                 " (`' )/`--'/ `-' \\|  ,  \\/  ,  | (`' )/`--' \n" +

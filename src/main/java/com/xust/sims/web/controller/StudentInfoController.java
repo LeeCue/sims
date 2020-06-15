@@ -37,6 +37,14 @@ public class StudentInfoController {
     @Autowired
     private StudentInfoService studentInfoService;
 
+    @GetMapping("/student/personalInfo")
+    @Secured({"ROLE_admin", "ROLE_teacher", "ROLE_student"})
+    public Student queryPersonalData(@RequestParam("id") String id) {
+        log.info("获取GET请求参数为：{}", id);
+        //service -> dao
+        return null;
+    }
+
     @PostMapping("/student/info")
     @Secured({"ROLE_admin"})
     public PageInfo<Student> queryStudentInfo(@RequestBody StudentInfoQuery query) {

@@ -75,4 +75,14 @@ public class Registry implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
+    @Override
+    public int hashCode() {
+        return uid.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return uid.equals(((Registry) obj).uid);
+    }
 }

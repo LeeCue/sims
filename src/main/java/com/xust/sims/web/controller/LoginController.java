@@ -30,10 +30,10 @@ public class LoginController {
     private DefaultKaptcha defaultKaptcha;
 
     @RequestMapping("/login")
-    public void login(HttpServletResponse response) throws Exception{
+    public void login(HttpServletResponse response) throws Exception {
+        PrintWriter writer = response.getWriter();
         response.setStatus(401);
         response.setContentType("application/json;charset=utf-8");
-        PrintWriter writer = response.getWriter();
         writer.write(JSON.toJSONString(new RespBean(ResponseCode.NOT_LOGIN)));
         writer.flush();
         writer.close();
@@ -59,9 +59,9 @@ public class LoginController {
         //告诉浏览器该响应的属性
         response.setHeader("Cache-Control", "no-store");
         response.setHeader("Pragma", "no-cache");
-        response.setDateHeader("Expires",0);
+        response.setDateHeader("Expires", 0);
         response.setContentType("image/jpeg");
-        try(ServletOutputStream responseOutputStream = response.getOutputStream()) {
+        try (ServletOutputStream responseOutputStream = response.getOutputStream()) {
             responseOutputStream.write(captchaAsJpeg);
             responseOutputStream.flush();
         }

@@ -4,7 +4,6 @@ import com.xust.sims.dao.MenuMapper;
 import com.xust.sims.entity.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

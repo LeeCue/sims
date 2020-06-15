@@ -29,6 +29,7 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @PostMapping("/file/uploadAvatar")
+    @Secured({"ROLE_user"})
     public RespBean avatarUpload(@RequestParam("avatar") MultipartFile avatar) {
         String res = userService.uploadAvatar(avatar, "sims");
         JSONObject jsonObject = new JSONObject();
