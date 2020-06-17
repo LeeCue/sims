@@ -1,5 +1,6 @@
 package com.xust.sims.web.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.xust.sims.dto.RespBean;
 import com.xust.sims.dto.ResponseCode;
 import com.xust.sims.entity.Academy;
@@ -9,6 +10,7 @@ import com.xust.sims.service.SchoolInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.bytecode.analysis.Executor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +28,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class SchoolInfoController {
     @Autowired
     private SchoolInfoService schoolInfoService;
+
+    @GetMapping("/school/details")
+    public String initAllAcademiesDetails() {
+        return JSON.toJSONString(schoolInfoService.getAcademiesDetails());
+    }
 
     @GetMapping("/academy/initAll")
     public List<Academy> initAllAcademies() {

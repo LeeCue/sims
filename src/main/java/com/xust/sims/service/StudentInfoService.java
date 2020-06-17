@@ -28,6 +28,13 @@ public interface StudentInfoService {
     List<Student> getStudentByIds(int[] ids);
 
     /**
+     * 根据学生id查询选课状态
+     * @param studentId
+     * @return
+     */
+    boolean querySelectFlag(String studentId);
+
+    /**
      * 添加学生信息(单条)，发送一封欢迎邮件
      * @param student
      */

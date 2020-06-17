@@ -117,4 +117,15 @@
         </foreach>
     </select>
 
+    <select id="getSelectFlagByStudentId" resultType="java.lang.Boolean">
+        SELECT selectFlag
+        FROM academy
+        WHERE id IN
+        (
+        		SELECT academyId
+        		FROM student
+        		WHERE id = #{id}
+        )
+    </select>
+
 </mapper>

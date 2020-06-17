@@ -1,6 +1,5 @@
 package com.xust.sims.entity;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;

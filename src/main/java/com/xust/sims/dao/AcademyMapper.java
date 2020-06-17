@@ -18,6 +18,8 @@ public interface AcademyMapper {
      */
     Academy findAcademyBaseInfoById(Integer id);
 
+    List<Academy> findAcademyAllInfoDetails();
+
     List<Academy> findAllAcademyInfo();
 
     Academy findAcademyByMajorId(Integer majorId);

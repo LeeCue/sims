@@ -17,6 +17,4 @@ public class Class {
     private Integer count;
 
     private List<Course> courses;
-
-    private List<ExamInfo> examInfos;
 }

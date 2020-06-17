@@ -31,9 +31,9 @@ public class LoginController {
 
     @RequestMapping("/login")
     public void login(HttpServletResponse response) throws Exception {
+        response.setContentType("application/json;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         response.setStatus(401);
-        response.setContentType("application/json;charset=utf-8");
         writer.write(JSON.toJSONString(new RespBean(ResponseCode.NOT_LOGIN)));
         writer.flush();
         writer.close();

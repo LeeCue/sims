@@ -37,6 +37,13 @@ public interface StudentMapper {
     Integer getClassIdByStudentId(String id);
 
     /**
+     * 根据学生id获取查询状态
+     * @param id
+     * @return
+     */
+    boolean getSelectFlagByStudentId(String id);
+
+    /**
      * 单条插入学生信息
      * @param studentInsert 单条插入学生信息
      * @return effect rows

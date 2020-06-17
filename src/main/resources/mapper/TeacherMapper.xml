@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xust.sims.dao.TeacherMapper">
+
+    <resultMap id="teacherMap" type="Teacher">
+        <id column="teacherId" property="id"/>
+        <result column="teacherName" property="name"/>
+    </resultMap>
+
+    <resultMap id="academyTeachers" type="Academy">
+        <id column="academyId" property="id"/>
+        <result column="academyName" property="name"/>
+        <collection property="teachers" column="teacherId" resultMap="teacherMap" fetchType="eager"/>
+    </resultMap>
+
+    <select id="getTeacherInfoByAcademyId" resultType="com.xust.sims.entity.Teacher">
+        SELECT id, name, academyId, majorId
+        FROM teacher
+        WHERE academyId = #{academyId}
+    </select>
+
+    <select id="getTeacherInfoById" resultType="com.xust.sims.entity.Teacher">
+        SELECT id, name, academyId, majorId
+        FROM teacher
+        WHERE id = #{teacherId}
+    </select>
+
+    <select id="getAcademyWithTeacherInfo" resultMap="academyTeachers">
+        SELECT teacher.id as teacherId, teacher.name as teacherName, academy.id as academyId, academy.name as academyName
+        FROM teacher LEFT JOIN academy ON academyId = academy.id;
+    </select>
+</mapper>

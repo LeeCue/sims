@@ -11,6 +11,14 @@
         <result column="name" property="name"/>
     </resultMap>
 
+    <resultMap id="academyInfoDetails" type="Academy">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+
+        <collection column="id" property="majors" fetchType="eager"
+                    select="com.xust.sims.dao.MajorMapper.findMajorsDetails"/>
+    </resultMap>
+
     <select id="findAcademyBaseInfoById" resultMap="academyBaseInfoMap">
         SELECT <include refid="academyBaseInfoCols"/>
         FROM academy
@@ -36,5 +44,10 @@
         SELECT id
         FROM academy
         WHERE name = #{academyName}
+    </select>
+
+    <select id="findAcademyAllInfoDetails" resultMap="academyInfoDetails">
+        SELECT <include refid="academyBaseInfoCols"/>
+        FROM academy
     </select>
 </mapper>

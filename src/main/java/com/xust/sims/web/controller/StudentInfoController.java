@@ -4,12 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xust.sims.dto.*;
 import com.xust.sims.entity.Student;
+import com.xust.sims.entity.User;
 import com.xust.sims.service.StudentInfoService;
 import com.xust.sims.service.StudentInfoServiceImpl;
 import com.xust.sims.utils.StudentInfoInsertUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,14 +34,16 @@ import java.util.List;
 @RequestMapping("/web")
 @RestController
 @Slf4j
-public class StudentInfoController {
+public class StudentInfoController extends BaseController {
     @Autowired
     private StudentInfoService studentInfoService;
 
     @GetMapping("/student/personalInfo")
-    @Secured({"ROLE_admin", "ROLE_teacher", "ROLE_student"})
-    public Student queryPersonalData(@RequestParam("id") String id) {
-        log.info("获取GET请求参数为：{}", id);
+    @Secured({"ROLE_admin", "ROLE_student", "ROLE_user"})
+    public Student queryPersonalData(Principal principal) {
+        User user = getUserInfo(principal);
+        String id = principal.getName();
+        log.info("当前登陆的用户名称是：{}", id);
         //service -> dao
         return null;
     }
@@ -73,6 +76,12 @@ public class StudentInfoController {
         List<Student> studentList = studentInfoService.getStudentByIds(ids);
         log.info("studentList的size为：{}", studentList.size());
         StudentInfoInsertUtils.getStudentInfoFile(response, studentList, "部分学生数据信息文件");
+    }
+
+    @GetMapping("/query/selectCourseFlag")
+    @Secured({"ROLE_student", "ROLE_admin"})
+    public boolean queryStudentSelectCourseFlag(Principal principal) {
+        return studentInfoService.querySelectFlag(principal.getName());
     }
 
     @PostMapping("/studentInfo/upload")

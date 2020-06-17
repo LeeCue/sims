@@ -25,6 +25,12 @@ public interface MajorMapper {
     List<Major> findAllMajors();
 
     /**
+     * 查询专业细节信息
+     * @return
+     */
+    List<Major> findMajorsDetails(Integer academyId);
+
+    /**
      * 根据学院ID来获取专业信息
      * @param academyId 学院ID
      * @return 该学院下的所有专业信息

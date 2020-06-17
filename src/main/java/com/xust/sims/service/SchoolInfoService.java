@@ -19,6 +19,12 @@ public interface SchoolInfoService {
     List<Academy> getAllAcademies();
 
     /**
+     * 获取学院的详细信息（所含专业-以及班级）
+     * @return
+     */
+    List<Academy> getAcademiesDetails();
+
+    /**
      * 根据专业ID来获取所属学院信息
      * @param majorId 专业ID
      * @return 学院信息
@@ -87,7 +93,17 @@ public interface SchoolInfoService {
      */
     void updateClassSize(Map<Integer, Integer> classSizeMap);
 
+    /**
+     * 更新班级人数（班级人数+1）
+     * @param classId
+     */
     void updateClassSizePlusOne(Integer classId);
 
+    /**
+     * 添加专业信息
+     * @param academyId
+     * @param majorName
+     * @return
+     */
     boolean addMajorInfo(Integer academyId, String majorName);
 }

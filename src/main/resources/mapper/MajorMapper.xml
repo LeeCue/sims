@@ -15,6 +15,13 @@
         <result column="name" property="name"/>
     </resultMap>
 
+    <resultMap id="majorInfoDetails" type="Major">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association property="classes" column="id" fetchType="eager"
+                     select="com.xust.sims.dao.ClassMapper.findClassByMajorId"/>
+    </resultMap>
+
     <select id="findMajorBaseInfoById" resultMap="majorBaseInfoMap">
         SELECT <include refid="majorBaseInfoCols"/>
         FROM major
@@ -36,5 +43,11 @@
         SELECT id
         FROM major
         WHERE name = #{majorName}
+    </select>
+
+    <select id="findMajorsDetails" resultMap="majorInfoDetails">
+        SELECT major.*
+        FROM major LEFT JOIN academy_major ON id = majorId
+        WHERE academyId = #{academyId};
     </select>
 </mapper>

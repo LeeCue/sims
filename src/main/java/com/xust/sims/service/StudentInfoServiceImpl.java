@@ -65,6 +65,11 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     }
 
     @Override
+    public boolean querySelectFlag(String studentId) {
+        return studentMapper.getSelectFlagByStudentId(studentId);
+    }
+
+    @Override
     public void addOneStudentInfo(Student student) {
         messagingTemplate.convertAndSend("com.xust.student.welcome", student);
     }

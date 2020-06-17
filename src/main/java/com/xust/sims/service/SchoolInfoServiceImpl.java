@@ -34,6 +34,11 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
     }
 
     @Override
+    public List<Academy> getAcademiesDetails() {
+        return academyMapper.findAcademyAllInfoDetails();
+    }
+
+    @Override
     public Academy getAcademyByMajorId(Integer majorId) {
         Academy academy = null;
         if (majorId == null) {

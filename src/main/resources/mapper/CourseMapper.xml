@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xust.sims.dao.CourseMapper">
+    <sql id="courseBaseCols">
+        id, name, status, credit, period, academyId, teacherId, total, createTime, updateTime
+    </sql>
+
+    <update id="openAllCourseSystem">
+        UPDATE academy
+        SET selectFlag = true
+    </update>
+
+    <update id="openCourseSystemByAcademyIds">
+        UPDATE academy
+        SET selectFlag = true
+        WHERE id IN
+        (
+            <foreach collection="array" separator="," item="id">
+                #{id}
+            </foreach>
+        )
+    </update>
+
+    <update id="closeAllCourseSystem">
+        UPDATE academy
+        SET selectFlag = false
+    </update>
+
+    <delete id="deleteCourseInfoById">
+        DELETE
+        FROM course
+        WHERE id = #{id}
+    </delete>
+
+    <resultMap id="courseMap" type="Course">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="status" property="status"/>
+        <result column="credit" property="credit"/>
+        <result column="total" property="total"/>
+        <result column="period" property="period"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+
+        <association property="academy" column="academyId" fetchType="eager"
+                     select="com.xust.sims.dao.AcademyMapper.findAcademyBaseInfoById"/>
+        <association property="teacher" column="teacherId" fetchType="eager"
+                     select="com.xust.sims.dao.TeacherMapper.getTeacherInfoById"/>
+    </resultMap>
+
+    <insert id="addCourse">
+        INSERT INTO course
+        <trim prefix="(" suffix=")"><include refid="courseBaseCols"/></trim>
+        VALUES (null, #{name}, #{status}, #{credit}, #{period}, #{academyId}, #{teacherId}, #{total},
+                #{createTime}, #{updateTime})
+    </insert>
+
+    <insert id="addCourseConfig">
+        INSERT INTO teacher_course
+        (teacherId, courseId, classId)
+        VALUES 
+        <foreach collection="selectItems" item="classId" separator=",">
+            (#{teacherId}, #{courseId}, #{classId})
+        </foreach>
+    </insert>
+
+    <insert id="addStudentCommonCourse">
+        INSERT INTO student_course
+        (studentId, courseId)
+        VALUES
+        <foreach collection="studentIds" item="sid" separator=",">
+            (#{sid}, #{cid})
+        </foreach>
+    </insert>
+
+    <select id="findCourse" resultMap="courseMap">
+        <bind name="name_search_pattern" value="'%' + name + '%'"/>
+        SELECT <include refid="courseBaseCols"/>
+        FROM course
+        <where>
+            <if test="name != null and name != ''">
+                name LIKE #{name_search_pattern}
+            </if>
+            <if test="academyId != null">
+                academyId = #{academyId}
+            </if>
+            <if test="status != null and status.size > 0">
+                status in
+                <foreach collection="status" open="(" close=")" separator="," item="num">
+                    #{num}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="getCommonCourse" resultMap="courseMap">
+        SELECT <include refid="courseBaseCols"/>
+        FROM course
+        WHERE status = 3
+    </select>
+
+
+</mapper>

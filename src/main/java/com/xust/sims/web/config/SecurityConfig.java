@@ -78,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(failureHandler())
                 .permitAll()
                 .and()
-                .logout().logoutUrl("/logout").clearAuthentication(true).invalidateHttpSession(true)
+                .logout().logoutUrl("/web/logout").clearAuthentication(true).invalidateHttpSession(true)
                 .addLogoutHandler((httpServletRequest, httpServletResponse, authentication) -> {})
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
@@ -94,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationSuccessHandler successHandler() {
         return (httpServletRequest, httpServletResponse, authentication) -> {
-            httpServletResponse.setContentType("application/json;charset=utf-8");
+            httpServletResponse.setContentType("application/json;charset=UTF-8");
             PrintWriter writer = httpServletResponse.getWriter();
             httpServletResponse.setStatus(HttpStatus.OK.value());
             Map<String, Object> map = new HashMap<>();
@@ -112,7 +112,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationFailureHandler failureHandler() {
         return (httpServletRequest, httpServletResponse, e) -> {
-            httpServletResponse.setContentType("application/json;charset=utf-8");
+            httpServletResponse.setContentType("application/json;charset=UTF-8");
+            httpServletResponse.setCharacterEncoding("UTF-8");
             PrintWriter writer = httpServletResponse.getWriter();
             httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
             Map<String, Object> map = new HashMap<>();
