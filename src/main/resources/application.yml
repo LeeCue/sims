@@ -1,0 +1,65 @@
+server:
+  port: 9000
+
+#Spring配置部分
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://localhost:3306/sims?useSSL=false&serverTimezone=Asia/Shanghai
+    username: your name
+    password: your password
+    #配置数据库连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      initial-size: 20
+      max-active: 30
+      min-idle: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT * FROM `registry` LIMIT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: false
+  redis:
+    database: 0
+    host: 127.0.0.1
+    password:
+    jedis:
+      pool:
+        max-active: 30
+        max-idle: 20
+        max-wait: -1
+        min-idle: 10
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: your qq email
+    password: your qq email authorationCode
+    default-encoding: utf-8
+  activemq:
+    broker-url: tcp://127.0.0.1:61616
+    packages:
+      trust-all: true
+    user: admin
+    password: admin
+
+#MyBatis配置部分
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+#日志配置部分
+logging:
+  level:
+    com:
+      xust:
+        sims: error
+    org:
+      springframework: error
+
+
+
+
