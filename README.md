@@ -74,27 +74,27 @@
 
 - **登录页面**：
 
-![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_index.png)
+![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_index.png)  
 
 - **首页**：
 
-![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_home.png)
+![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_home.png)  
 
 - **学生信息管理部分：**
 
-![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_student.png)
+![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_student.png)  
 
 - **用户管理部分：**
 
-![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_personal.png)
+![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_personal.png)  
 
 - **管理员开放选课系统：**
 
-![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_course_system.png)
+![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_course_system.png)  
 
 - **学生选课：**
 
-![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_student_select_course.png)
+![](https://cloud-img-1301075855.cos.ap-chengdu.myqcloud.com/sims/readme_show/sims_student_select_course.png)  
 
 ---
 
