@@ -30,6 +30,13 @@ public interface StudentMapper {
     List<Student> findStudentByIds(@Param("ids") List<Integer> ids);
 
     /**
+     * 根据学生id获取详细信息
+     * @param id
+     * @return
+     */
+    Student findStudentDetailsById(String id);
+
+    /**
      * 根据学生id查找班级id
      * @param id
      * @return

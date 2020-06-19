@@ -34,6 +34,14 @@ public interface CourseService {
     JSON findCommonCourseInCache(int pageSize, int currPage);
 
     /**
+     * 根据学生id、班级id查询个人所属的课程信息
+     * @param id
+     * @param classId
+     * @return
+     */
+    List<Course> getCoursesByStudentId(String id, Integer classId);
+
+    /**
      * 获取抢课地址签名值（前提，选课已经开启）
      * @return
      */

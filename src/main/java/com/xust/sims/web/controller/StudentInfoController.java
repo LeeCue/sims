@@ -41,11 +41,7 @@ public class StudentInfoController extends BaseController {
     @GetMapping("/student/personalInfo")
     @Secured({"ROLE_admin", "ROLE_student", "ROLE_user"})
     public Student queryPersonalData(Principal principal) {
-        User user = getUserInfo(principal);
-        String id = principal.getName();
-        log.info("当前登陆的用户名称是：{}", id);
-        //service -> dao
-        return null;
+        return studentInfoService.getStudentInfoDetailsById(principal.getName());
     }
 
     @PostMapping("/student/info")

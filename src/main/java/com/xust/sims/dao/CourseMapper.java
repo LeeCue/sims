@@ -29,6 +29,20 @@ public interface CourseMapper {
     List<Course> findCourse(SelectCourse selectCourse);
 
     /**
+     * 查询教学计划中的课程信息，通过班级id
+     * @param classId
+     * @return
+     */
+    List<Course> findScheduleCourses(Integer classId);
+
+    /**
+     * 查找公选课程信息
+     * @param studentId
+     * @return
+     */
+    List<Course> findCommonCourses(String studentId);
+
+    /**
      * 获取所有公选性质的课程
      * @return
      */

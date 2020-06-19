@@ -18,6 +18,7 @@ import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
@@ -62,6 +63,11 @@ public class StudentInfoServiceImpl implements StudentInfoService {
             return studentMapper.findStudentByIds(idsCollection);
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public Student getStudentInfoDetailsById(String id) {
+        return studentMapper.findStudentDetailsById(id);
     }
 
     @Override
@@ -206,7 +212,9 @@ public class StudentInfoServiceImpl implements StudentInfoService {
 
     private void addErrorMessage(List<StudentExcelData> errorList) {
         for (StudentExcelData excelData : errorList) {
-            excelData.setDescription("请检查相关学院、专业、班级信息是否正确！！！");
+            if (StringUtils.isEmpty(excelData.getDescription())) {
+                excelData.setDescription("请检查相关学院、专业、班级信息是否正确！！！");
+            }
         }
     }
 

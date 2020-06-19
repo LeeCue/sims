@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.xust.sims.dto.RespBean;
 import com.xust.sims.dto.ResponseCode;
-import com.xust.sims.dto.TestUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
-import java.util.Date;
 
 /**
  * @author LeeCue
@@ -67,10 +66,4 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/test")
-    public TestUser test(TestUser user) {
-        log.info("获取的前端的时间为:{}", user);
-        user.setTime(new Date(System.currentTimeMillis()));
-        return user;
-    }
 }

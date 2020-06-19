@@ -28,6 +28,13 @@ public interface StudentInfoService {
     List<Student> getStudentByIds(int[] ids);
 
     /**
+     * 根据学生id获取详细信息
+     * @param id
+     * @return
+     */
+    Student getStudentInfoDetailsById(String id);
+
+    /**
      * 根据学生id查询选课状态
      * @param studentId
      * @return

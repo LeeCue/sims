@@ -74,6 +74,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public List<Course> getCoursesByStudentId(String studentId, Integer classId) {
+        //先查找教学计划中的课程
+        List<Course> courseList = courseMapper.findScheduleCourses(classId);
+        //查找公选课程信息
+        courseList.addAll(courseMapper.findCommonCourses(studentId));
+        return courseList;
+    }
+
+    @Override
     public JSON getSelectCourseUrlSign() {
         JSONObject json = new JSONObject();
         if (redisTemplate.opsForValue().get("disabled_select") != null) {

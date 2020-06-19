@@ -99,5 +99,19 @@
         WHERE status = 3
     </select>
 
+    <select id="findScheduleCourses" resultMap="courseMap">
+        SELECT course.id, course.name, course.status, course.credit, course.period,
+               course.academyId, teacher_course.teacherId, teacher_course.classId
+        FROM teacher_course LEFT JOIN course ON courseId = id
+        WHERE classId = #{classId}
+    </select>
+
+    <select id="findCommonCourses" resultMap="courseMap">
+        SELECT course.id, course.name, course.status, course.credit, course.period, course.teacherId,
+               course.academyId, student_course.studentId
+        FROM student_course LEFT JOIN course ON courseId = id
+        WHERE studentId = #{studentId}
+    </select>
+
 
 </mapper>

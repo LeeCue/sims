@@ -12,6 +12,7 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -71,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/web/createImageCode").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginProcessingUrl("/doLogin")
+                .formLogin().loginProcessingUrl("/web/doLogin")
                 .loginPage("/web/login")
                 .usernameParameter("username").passwordParameter("password")
                 .successHandler(successHandler())

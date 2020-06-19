@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
@@ -43,8 +44,8 @@ public class ScriptAspect {
                 return;
             }
             jedis = (Jedis) connectionFactory.getConnection().getNativeConnection();
-            InputStream inputStream1 = new FileInputStream(ResourceUtils.getFile("classpath:select_course_procedure.lua"));
-            InputStream inputStream2 = new FileInputStream(ResourceUtils.getFile("classpath:cacel_course_procedure.lua"));
+            InputStream inputStream1 = new ClassPathResource("select_course_procedure.lua").getInputStream();
+            InputStream inputStream2 = new ClassPathResource("cacel_course_procedure.lua").getInputStream();
             byte[] bytes1 = new byte[inputStream1.available()];
             byte[] bytes2 = new byte[inputStream2.available()];
             inputStream1.read(bytes1);

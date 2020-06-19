@@ -128,4 +128,10 @@
         )
     </select>
 
+    <select id="findStudentDetailsById" resultMap="studentBaseInfoMap">
+        SELECT <include refid="studentCols"/>
+        FROM student
+        WHERE id = #{id}
+    </select>
+
 </mapper>

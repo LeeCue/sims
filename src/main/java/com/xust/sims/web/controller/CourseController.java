@@ -50,6 +50,12 @@ public class CourseController {
         return new RespBean(ResponseCode.SUCCESS);
     }
 
+    @GetMapping("/student/courses")
+    @Secured({"ROLE_admin", "ROLE_student"})
+    public List<Course> getStudentCourses(Principal principal, @RequestParam("classId") Integer classId) {
+        return courseService.getCoursesByStudentId(principal.getName(), classId);
+    }
+
     @PostMapping("/init/courseInfo")
     @Secured({"ROLE_user"})
     public PageInfo<Course> initCourseInfo(@RequestBody SelectCourse selectCourse) {
@@ -124,6 +130,9 @@ public class CourseController {
                                            @RequestParam("endTime") Date endTime,
                                            @RequestParam("selectAll") boolean selectAll,
                                            @RequestParam("selectAcademies") int[] academyIds) {
+        if (new Date().after(startTime)) {
+            return new RespBean(ResponseCode.ERROR, "开启失败，系统开启时间不能小于当前时间");
+        }
         log.info("获取的信息为：{}、{}、{}、{}", startTime, endTime, selectAll, Arrays.toString(academyIds));
         if (courseService.openCourseSystem(startTime, endTime, academyIds)) {
             return new RespBean(ResponseCode.SUCCESS);
