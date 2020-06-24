@@ -17,7 +17,9 @@
 
 &emsp;&emsp;关于前后端<font color='blue'>开发</font>中**跨域**问题，开发时采用后端解决方式，通过配置SpringSecurity中的cors项，允许跨域。
 
-&emsp;&emsp;项目最终在<font color='blue'>部署</font>的时候，前后端采用独立部署，通过nginx来代理请求，从而解决了跨域问题。
+&emsp;&emsp;项目最终在<font color='blue'>部署</font>的时候，前后端采用独立部署，通过nginx来代理请求，从而解决了跨域问题。  
+
+&emsp;&emsp;觉得此项目不错的小伙伴，不要忘记 **star**~。
 
 ## 项目简介
 
