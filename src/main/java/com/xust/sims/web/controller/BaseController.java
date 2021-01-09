@@ -3,6 +3,7 @@ package com.xust.sims.web.controller;
 import com.xust.sims.entity.User;
 import com.xust.sims.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.security.Principal;
 

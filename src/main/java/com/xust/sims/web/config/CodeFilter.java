@@ -2,6 +2,7 @@ package com.xust.sims.web.config;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xust.sims.utils.CodeUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -22,6 +23,7 @@ import java.io.PrintWriter;
  * @date 2020-03-19
  */
 @Component
+@Slf4j
 public class CodeFilter extends GenericFilterBean {
     private String defaultFilterProcessUrl = "/doLogin";
 
@@ -29,9 +31,11 @@ public class CodeFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+//        logger.info("defaultFilterProcessUrl : " + request.getServletPath());
         if (HttpMethod.POST.name().equalsIgnoreCase(request.getMethod()) && defaultFilterProcessUrl.equals(request.getServletPath())) {
             //验证码验证
             String requestCaptcha = request.getParameter("imageCode");
+            logger.info("进入验证码验证：" + request.getServletPath() + " : " + defaultFilterProcessUrl + " : " + requestCaptcha);
             if (!CodeUtils.checkVerifyCode(request, requestCaptcha)) {
                 response.setStatus(405);
                 response.setContentType("application/json;charset=utf-8");
