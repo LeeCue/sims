@@ -12,6 +12,7 @@ import com.xust.sims.entity.Course;
 import com.xust.sims.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -35,6 +36,8 @@ import java.util.concurrent.ExecutionException;
 public class CourseController {
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @PostMapping("/add/course")
     @Secured({"ROLE_admin"})
@@ -134,6 +137,9 @@ public class CourseController {
             return new RespBean(ResponseCode.ERROR, "开启失败，系统开启时间不能小于当前时间");
         }
         log.info("获取的信息为：{}、{}、{}、{}", startTime, endTime, selectAll, Arrays.toString(academyIds));
+        if (redisTemplate.hasKey("disabled_select")) {
+            return new RespBean(ResponseCode.ERROR, "开启失败，选课系统已经开放，不可重复开放！");
+        }
         if (courseService.openCourseSystem(startTime, endTime, academyIds)) {
             return new RespBean(ResponseCode.SUCCESS);
         } else {

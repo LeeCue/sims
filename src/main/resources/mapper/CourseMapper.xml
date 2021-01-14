@@ -82,10 +82,10 @@
                 name LIKE #{name_search_pattern}
             </if>
             <if test="academyId != null">
-                academyId = #{academyId}
+                AND academyId = #{academyId}
             </if>
             <if test="status != null and status.size > 0">
-                status in
+                AND status in
                 <foreach collection="status" open="(" close=")" separator="," item="num">
                     #{num}
                 </foreach>

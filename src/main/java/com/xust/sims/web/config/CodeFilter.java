@@ -25,13 +25,13 @@ import java.io.PrintWriter;
 @Component
 @Slf4j
 public class CodeFilter extends GenericFilterBean {
-    private String defaultFilterProcessUrl = "/doLogin";
+    private String defaultFilterProcessUrl = "/web/doLogin";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-//        logger.info("defaultFilterProcessUrl : " + request.getServletPath());
+        logger.info("defaultFilterProcessUrl : " + request.getServletPath());
         if (HttpMethod.POST.name().equalsIgnoreCase(request.getMethod()) && defaultFilterProcessUrl.equals(request.getServletPath())) {
             //验证码验证
             String requestCaptcha = request.getParameter("imageCode");

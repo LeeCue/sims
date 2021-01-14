@@ -254,6 +254,7 @@ public class CourseServiceImpl implements CourseService {
             //删除存储在redis的keyList\
             log.info("要删除keyList: {}", keys);
             redisTemplate.delete(keys);
+            redisTemplate.delete("sign");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
